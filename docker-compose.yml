@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  mysql:
+    build:
+      context: ./db
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - minharede
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  back-end:
+    build:
+      context: ./back-end
+    container_name: back-end
+    networks:
+      - minharede
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: root
+
+  bff:
+    build:
+      context: ./bff
+    container_name: bff
+    networks:
+      - minharede
+    ports:
+      - "3000:3000"
+    depends_on:
+      - back-end
+
+  front-end:
+    build:
+      context: ./front-end
+    container_name: front-end
+    networks:
+      - minharede
+    ports:
+      - "4200:4200"
+    depends_on:
+      - bff
+    volumes:
+      - ${PWD}/front-end
+
+  rabbitmq:
+    build:
+      context: ./mensageria
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672" 
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbitmq
+      RABBITMQ_DEFAULT_PASS: teste
+    networks:
+      - minharede
+networks:
+  minharede:
+    driver: bridge
+
+volumes:
+  mysql-data:
