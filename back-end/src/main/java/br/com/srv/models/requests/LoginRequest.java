@@ -1,5 +1,6 @@
-package br.com.srv.entities.requests;
+package br.com.srv.models.requests;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -11,9 +12,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter 
 @Setter
-public class LoginRequest {
+public class LoginRequest {	
 	
+	@NotEmpty(message = "O login não pode estar vazio")
 	private String login;
 	
+	@NotEmpty(message = "A senha não pode estar vazia")
 	private String senha;
 }

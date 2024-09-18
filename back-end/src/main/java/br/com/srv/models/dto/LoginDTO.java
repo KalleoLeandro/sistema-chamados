@@ -1,4 +1,4 @@
-package br.com.srv.entities.dto;
+package br.com.srv.models.dto;
 
 public class LoginDTO {
 	private String login;

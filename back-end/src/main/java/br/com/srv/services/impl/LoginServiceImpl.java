@@ -9,8 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import br.com.srv.entities.LoginEntity;
-import br.com.srv.entities.requests.LoginRequest;
 import br.com.srv.exceptions.DefaultErrorException;
+import br.com.srv.models.requests.LoginRequest;
 import br.com.srv.models.responses.LoginResponse;
 import br.com.srv.repositories.LoginRepository;
 import br.com.srv.services.LoginService;

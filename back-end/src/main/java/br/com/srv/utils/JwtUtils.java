@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import br.com.srv.entities.LoginEntity;
-import br.com.srv.entities.dto.LoginDTO;
+import br.com.srv.models.dto.LoginDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
