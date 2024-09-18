@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { Cripto } from 'src/app/model/Cripto';
+import { Component, OnInit } from '@angular/core';
+import { Cripto } from 'src/app/models/Cripto';
 import * as forge from 'node-forge';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { publicKey } from 'src/app/model/PublicKey';
-import { Login } from 'src/app/model/Login';
+import { publicKey } from 'src/app/models/PublicKey';
+import { Login } from 'src/app/models/Login';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
 
@@ -16,6 +16,8 @@ export class LoginComponent {
 
   public publicKey: string = publicKey;
 
+  public token = sessionStorage.getItem('authorization');
+
   public loginForm: FormGroup = this.formBuilder.group({
     login: ['', Validators.required],
     senha: ['', Validators.required]
@@ -25,8 +27,10 @@ export class LoginComponent {
 
   public login: Login = { login: "", senha: "" };
 
-  constructor(private formBuilder: FormBuilder, private loginService:LoginService, private router:Router) {
-
+  constructor(private formBuilder: FormBuilder, private loginService: LoginService, private router: Router) {
+    if (this.token !== null) {
+      this.router.navigate(['/']);      
+    }
   }
 
   public pubKey: any = forge.pki.publicKeyFromPem(this.publicKey);
@@ -49,12 +53,12 @@ export class LoginComponent {
 
     const publicKeyForge = forge.pki.publicKeyFromPem(this.publicKey);
     const encryptedData = forge.util.encode64(publicKeyForge.encrypt(JSON.stringify(this.login)));
-    this.hash.hash = encryptedData;
-    alert(this.hash.hash);
+    this.hash.hash = encryptedData;    
     this.loginService.login(this.hash).subscribe({
       next: (res) => {
         sessionStorage.setItem('authorization', res.body.token);
-        this.router.navigate(['./sistema']);
+        sessionStorage.setItem('userName', res.body.userName);
+        this.router.navigate(['./']);
       },
       error: (err) => {
         if (err.status === 401) {
