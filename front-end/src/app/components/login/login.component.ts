@@ -16,7 +16,8 @@ export class LoginComponent {
 
   public publicKey: string = publicKey;
 
-  public token = sessionStorage.getItem('authorization');
+  public token = sessionStorage.getItem('authorization') || "";
+  public userName = sessionStorage.getItem('userName') || "";
 
   public loginForm: FormGroup = this.formBuilder.group({
     login: ['', Validators.required],
@@ -28,9 +29,12 @@ export class LoginComponent {
   public login: Login = { login: "", senha: "" };
 
   constructor(private formBuilder: FormBuilder, private loginService: LoginService, private router: Router) {
-    if (this.token !== null) {
-      this.router.navigate(['/']);      
-    }
+    this.loginService.validarToken(this.token, this.userName).subscribe({
+      next: (res) => {
+        this.router.navigate(['/home']);
+      }
+    })
+    this.router.navigate(['/']);
   }
 
   public pubKey: any = forge.pki.publicKeyFromPem(this.publicKey);
@@ -53,12 +57,12 @@ export class LoginComponent {
 
     const publicKeyForge = forge.pki.publicKeyFromPem(this.publicKey);
     const encryptedData = forge.util.encode64(publicKeyForge.encrypt(JSON.stringify(this.login)));
-    this.hash.hash = encryptedData;    
+    this.hash.hash = encryptedData;
     this.loginService.login(this.hash).subscribe({
       next: (res) => {
         sessionStorage.setItem('authorization', res.body.token);
         sessionStorage.setItem('userName', res.body.userName);
-        this.router.navigate(['./']);
+        this.router.navigate(['/home']);
       },
       error: (err) => {
         if (err.status === 401) {

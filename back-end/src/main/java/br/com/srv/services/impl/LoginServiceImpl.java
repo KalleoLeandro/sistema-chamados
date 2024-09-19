@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import br.com.srv.entities.LoginEntity;
 import br.com.srv.exceptions.DefaultErrorException;
 import br.com.srv.models.requests.LoginRequest;
+import br.com.srv.models.requests.TokenRequest;
 import br.com.srv.models.responses.LoginResponse;
 import br.com.srv.repositories.LoginRepository;
 import br.com.srv.services.LoginService;
@@ -29,7 +30,7 @@ public class LoginServiceImpl implements LoginService{
 	private JwtUtils jwtUtils;
 	
 	@Override
-	public LoginResponse ValidarLogin(LoginRequest loginRequest) {
+	public LoginResponse validarLogin(LoginRequest loginRequest) {
 		try{
 			logger.info("Executando o LoginRepository.existsByLoginAndSenha");			
 			Optional<LoginEntity> usuarioOpt = repository.findByLoginAndSenha(loginRequest.getLogin(), loginRequest.getSenha());
@@ -48,6 +49,15 @@ public class LoginServiceImpl implements LoginService{
 		} catch (Exception e) {
 			throw new DefaultErrorException("Erro na execução da validação do login: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
 		}		
+	}
+
+	@Override
+	public Boolean validarToken(TokenRequest tokenRequest) {
+		try {
+			return jwtUtils.validateToken(tokenRequest) ? true : false;
+		} catch (Exception e) {
+			throw new DefaultErrorException("Erro na execução da validação do token: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+		}	
 	}
 
 }

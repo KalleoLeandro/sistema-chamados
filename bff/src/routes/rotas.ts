@@ -8,6 +8,7 @@ const rotas = Router();
 rotas.get('/teste', TesteController.teste);
 
 //Rotas Login
-rotas.post('/login', LoginController.validarLogin)
+rotas.post('/login', LoginController.validarLogin);
+rotas.post('/valida-token', LoginController.validarToken);
 
 export default rotas;

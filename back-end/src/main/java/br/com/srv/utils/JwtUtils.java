@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import br.com.srv.entities.LoginEntity;
-import br.com.srv.models.dto.LoginDTO;
+import br.com.srv.models.requests.TokenRequest;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -88,9 +88,9 @@ public class JwtUtils implements Serializable {
 	}
 
 	// valida o token
-	public Boolean validateToken(String token, LoginDTO loginDTO) throws Exception {
-		final String username = getUsernameFromToken(token);
-		return (username.equals(loginDTO.getLogin()) && !isTokenExpired(token));
+	public Boolean validateToken(TokenRequest tokenRequest) throws Exception {
+		final String username = getUsernameFromToken(tokenRequest.getToken());
+		return (username.equals(tokenRequest.getUserName()) && !isTokenExpired(tokenRequest.getToken()));
 	}
 
 	// Método para obter a chave secreta como uma instância de Key

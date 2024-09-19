@@ -11,7 +11,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
     database-platform: org.hibernate.dialect.MySQLDialect
 
 logging:
@@ -20,8 +20,7 @@ logging:
   level:
     root: INFO
     org.hibernate.SQL: DEBUG
-    org.springframework.jdbc.datasource: DEBUG
-    com.zaxxer.hikari: DEBUG
+    org.springframework.jdbc.datasource: DEBUG    
 
 secret:
   jwt:

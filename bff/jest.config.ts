@@ -14,7 +14,11 @@ const config: Config = {
       reportedFilePath: 'relative',
       relativeRootDir: './src',
     }]
-  ]
+  ],
+  transform: {
+    '^.+\\.(ts|tsx)$': 'ts-jest',
+  },
+  moduleFileExtensions: ['ts', 'tsx', 'js']
 };
 
 export default config;

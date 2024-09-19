@@ -1,4 +1,4 @@
-import { teste } from '../../src/controller/TesteController';
+import { teste } from '../../src/controllers/TesteController';
 import { Request, Response } from 'express';
 
 describe('Teste da função teste', () => {

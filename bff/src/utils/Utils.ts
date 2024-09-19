@@ -63,14 +63,32 @@ export const decriptografia = (hash: string) => {
     return mensagem;
 }
 
-export const logger:any = createLogger({
+const customFormat = format.printf(({ level, message, timestamp }) => {
+    return `${timestamp} [${level}]: ${message}`;
+});
+
+export const logger: any = createLogger({
     level: 'info',
     format: format.combine(
-        format.colorize(),
-        format.simple()
+        format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+        customFormat
     ),
     transports: [
-        new transports.Console(),
-        new transports.File({ filename: 'logs/application.log' })
+       
+        new transports.Console({
+            format: format.combine(
+                format.colorize(),
+                format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+                customFormat
+            )
+        }),
+       
+        new transports.File({ 
+            filename: 'logs/application.log',
+            format: format.combine(
+                format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+                customFormat
+            )
+        })
     ]
 });

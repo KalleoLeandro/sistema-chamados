@@ -17,13 +17,13 @@ export class LoginService {
     return this.http.post<any>(`${this.url}login`, hash, { observe: 'response' });
   }
 
-  public validarToken(token: string): Observable<any> {
+  public validarToken(token: string, userName:string): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'authorization': `${token}`,
       })
     }
-    return this.http.post<any>(`${this.url}validar-token`, {}, httpOptions);
+    return this.http.post<any>(`${this.url}valida-token`, { token, userName }, httpOptions);
   }
 }
