@@ -24,7 +24,7 @@ public class LoginEntity {
 	@Column(name = "nome")
 	private String nome;
 	
-	@Column(name = "n_documento")
+	@Column(name = "n_doc")
 	private String n_documento;
 	
 	@Column(name = "login")

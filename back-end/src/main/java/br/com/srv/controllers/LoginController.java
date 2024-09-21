@@ -24,17 +24,15 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 	
-	@PostMapping
-	@RequestMapping("/validar-login")
+	@PostMapping("/validar-login")
 	public ResponseEntity<LoginResponse> validarLogin(@RequestBody @Valid LoginRequest login){
 		logger.info("Executando a LoginService/validarLogin");		
 		LoginResponse response = loginService.validarLogin(login);
 		return ResponseEntity.status(response.getStatus()).body(response);
 	}
 	
-	@PostMapping
-	@RequestMapping("/validar-token")
-	public ResponseEntity<Boolean> validarToken(@RequestBody @Valid TokenRequest tokenRequest){
+	@PostMapping("/validar-token")
+	public ResponseEntity<Boolean> validarToken(@RequestBody @Valid TokenRequest tokenRequest){		
 		logger.info("Executando a LoginService/validarToken");		
 		return ResponseEntity.ok(loginService.validarToken(tokenRequest));
 		

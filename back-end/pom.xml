@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com</groupId>
-	<artifactId>srv</artifactId>
+	<artifactId>back-end-srv</artifactId>
 	<version>0.0.1</version>
 	<name>srv</name>
-	<description>SRV chamados</description>
+	<description>back-end-srv</description>
 	<url/>
 	<licenses>
 		<license/>

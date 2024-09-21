@@ -4,15 +4,28 @@ import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './components/main/main.component';
 import { HomeComponent } from './components/home/home.component';
 import { canActivate } from './guard/auth.guard';
+import { CadastroUsuarioComponent } from './components/usuario/cadastrar-usuario/cadastro-usuario.component';
 
 const routes: Routes = [
-  { path: "login", component: LoginComponent },
+  { path: 'login', component: LoginComponent },
+  // Redireciona o path vazio para o 'home' dentro de MainComponent
   {
-    path: "", component: MainComponent, children: [
-      { path: "home", component: HomeComponent }
-    ],
-    canActivate: [canActivate]
+    path: '', redirectTo: 'home', pathMatch: 'full'
   },
+  {
+    path: 'usuarios', redirectTo: 'home', pathMatch: 'full'
+  },
+  // Configuração do MainComponent com o canActivate
+  {
+    path: '', component: MainComponent, canActivate: [canActivate], children: [
+      { path: 'home', component: HomeComponent },
+      { path: 'usuarios', children: [
+        { path: 'cadastro', component: CadastroUsuarioComponent },
+        { path: 'cadastro/:id', component: CadastroUsuarioComponent }
+      ]}
+    ]
+  },  
+  { path: '**', redirectTo: '404' }
 ];
 
 @NgModule({

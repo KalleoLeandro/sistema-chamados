@@ -13,9 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ControllerAdvice
-public class GlobalExceptionHandler {
-	
-    //private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+public class GlobalExceptionHandler {    
 
     @ExceptionHandler(DefaultErrorException.class)
     public ResponseEntity<ErrorDetails> handleDefaultErrorException(DefaultErrorException ex, WebRequest request) {

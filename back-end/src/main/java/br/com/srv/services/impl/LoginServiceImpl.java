@@ -54,6 +54,7 @@ public class LoginServiceImpl implements LoginService{
 	@Override
 	public Boolean validarToken(TokenRequest tokenRequest) {
 		try {
+			if(tokenRequest.getToken().equalsIgnoreCase("")) return false;
 			return jwtUtils.validateToken(tokenRequest) ? true : false;
 		} catch (Exception e) {
 			throw new DefaultErrorException("Erro na execução da validação do token: " + e, HttpStatus.INTERNAL_SERVER_ERROR);

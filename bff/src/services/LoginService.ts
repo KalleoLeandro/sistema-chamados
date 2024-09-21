@@ -48,7 +48,7 @@ export const validarLogin = async (body: LoginRequest) => {
         }
         return retorno;
     } catch (error: any) {
-        log.error(error);
+        log.error(`Erro: ${error}`);
         throw new CustomError(error.message, 500);
     }
 }
@@ -66,7 +66,7 @@ export const validarToken = async(body:TokenRequest)=>{
         let response:boolean = await fetch(`${process.env.HOST_MS}/login/validar-token`, options).then((res) => res.json());        
         return response;
     }catch (error: any) {
-        log.error(error);
+        log.error(`Erro: ${error}`);
         throw new CustomError(error.message, 500);
     }
 }

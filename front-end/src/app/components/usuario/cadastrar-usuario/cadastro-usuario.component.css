@@ -1,0 +1,36 @@
+.content {    
+    min-height: 100vh;  
+    display: flex;
+    flex-direction: column;  
+    color: white;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5px 15px;
+}
+
+.btn-cadastrar{
+    width: 20% !important;
+}
+
+.botoes{
+    margin-top: 25px;
+     display: flex; 
+     flex-direction: row; 
+     justify-content: space-around;
+}
+
+input, select{
+    margin: 10px 0;
+}
+
+#id{
+    visibility: hidden;
+    margin: 0;
+    padding: 0;
+    height: 0;
+    width: 0;
+}
