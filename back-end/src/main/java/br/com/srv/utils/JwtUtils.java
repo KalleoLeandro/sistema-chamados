@@ -10,8 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import br.com.srv.entities.LoginEntity;
-import br.com.srv.models.requests.TokenRequest;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -88,10 +89,36 @@ public class JwtUtils implements Serializable {
 	}
 
 	// valida o token
-	public Boolean validateToken(TokenRequest tokenRequest) throws Exception {
-		final String username = getUsernameFromToken(tokenRequest.getToken());
-		return (username.equals(tokenRequest.getUserName()) && !isTokenExpired(tokenRequest.getToken()));
-	}
+	/*public Boolean validateToken(String token) throws Exception {
+	    try {
+	        // Tenta obter o username do token, apenas para verificar a integridade
+	        getUsernameFromToken(token);
+	        // Verifica se o token está expirado
+	        return !isTokenExpired(token);
+	    } catch (Exception e) {
+	        // Em caso de qualquer exceção, considera o token inválido
+	        return false;
+	    }
+	}*/
+	
+	public Boolean validateToken(String token) {
+	    try {
+	        // Cria um JwtParser utilizando a nova API
+	        JwtParser parser = Jwts.parserBuilder()
+	            .setSigningKey(getSecretKey()) // Define a chave de assinatura
+	            .build();
+	        
+	        // Faz a verificação do token
+	        @SuppressWarnings("unused")
+			Claims claims = parser.parseClaimsJws(token).getBody();
+	        	        
+	        // O token é válido
+	        return true;
+	    } catch (JwtException | IllegalArgumentException e) {
+	        // Qualquer problema com o token, ele é considerado inválido
+	        return false;
+	    }
+	}		
 
 	// Método para obter a chave secreta como uma instância de Key
 	public Key getSecretKey() {

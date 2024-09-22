@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import br.com.srv.entities.LoginEntity;
 import br.com.srv.exceptions.DefaultErrorException;
 import br.com.srv.models.requests.LoginRequest;
-import br.com.srv.models.requests.TokenRequest;
 import br.com.srv.models.responses.LoginResponse;
 import br.com.srv.repositories.LoginRepository;
 import br.com.srv.services.LoginService;
@@ -52,10 +51,10 @@ public class LoginServiceImpl implements LoginService{
 	}
 
 	@Override
-	public Boolean validarToken(TokenRequest tokenRequest) {
+	public Boolean validarToken(String token) {
 		try {
-			if(tokenRequest.getToken().equalsIgnoreCase("")) return false;
-			return jwtUtils.validateToken(tokenRequest) ? true : false;
+			if(token.equalsIgnoreCase("")) return false;
+			return jwtUtils.validateToken(token) ? true : false;
 		} catch (Exception e) {
 			throw new DefaultErrorException("Erro na execução da validação do token: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
 		}	

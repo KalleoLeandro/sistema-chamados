@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { LoginRequest } from "../models/LoginRequest";
 import { decriptografia, logger } from "../utils/Utils";
 import * as LoginService from '../services/LoginService';
-import { TokenRequest } from "../models/TokenRequest";
 
 const log = logger;
 
@@ -24,7 +23,7 @@ export const validarLogin = async (req: Request, res: Response) => {
 
 export const validarToken = async (req:Request, res: Response) =>{
     try{
-        const body:TokenRequest = req.body;
+        const body:any = req.headers.authorization;        
         log.info("Executando a LoginService.validarToken")
         const retorno: any = await LoginService.validarToken(body);        
         res.status(200).json(retorno);

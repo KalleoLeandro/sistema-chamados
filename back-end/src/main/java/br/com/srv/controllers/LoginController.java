@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.srv.models.requests.LoginRequest;
-import br.com.srv.models.requests.TokenRequest;
 import br.com.srv.models.responses.LoginResponse;
 import br.com.srv.services.LoginService;
 import jakarta.validation.Valid;
@@ -32,9 +32,9 @@ public class LoginController {
 	}
 	
 	@PostMapping("/validar-token")
-	public ResponseEntity<Boolean> validarToken(@RequestBody @Valid TokenRequest tokenRequest){		
+	public ResponseEntity<Boolean> validarToken(@RequestHeader("authorization") String token){		
 		logger.info("Executando a LoginService/validarToken");		
-		return ResponseEntity.ok(loginService.validarToken(tokenRequest));
+		return ResponseEntity.ok(loginService.validarToken(token));
 		
 	}
 }

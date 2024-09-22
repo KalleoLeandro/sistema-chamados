@@ -3,7 +3,6 @@ import { LoginRequest } from '../models/LoginRequest';
 import { CustomError } from '../exceptions/CustomError';
 import { LoginResponse } from '../models/LoginResponse';
 import { response } from 'express';
-import { TokenRequest } from '../models/TokenRequest';
 import { logger } from '../utils/Utils';
 
 dotenv.config();
@@ -53,14 +52,14 @@ export const validarLogin = async (body: LoginRequest) => {
     }
 }
 
-export const validarToken = async(body:TokenRequest)=>{
+export const validarToken = async(token:any)=>{
     try {
         const options = {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
+                'Content-Type': 'application/json',
+                'authorization': `${token}`
+            }            
         };
         log.info("Executando a /api/login/validar-token");
         let response:boolean = await fetch(`${process.env.HOST_MS}/login/validar-token`, options).then((res) => res.json());        

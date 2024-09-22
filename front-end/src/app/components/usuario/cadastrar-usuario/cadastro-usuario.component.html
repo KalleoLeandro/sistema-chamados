@@ -33,7 +33,7 @@
                   <label>
                       Data de Nascimento
                   </label>
-                  <input type="date" [max]="hoje" class="form-control" name="nome" formControlName="dataNascimento">
+                  <input type="date" [max]="hoje" class="form-control" name="nome" formControlName="dataNascimento" (blur)="dataNascimentoValida()">
                   <div class="d-flex flex-column">
                       <small *ngIf="cadastroForm.controls['dataNascimento'].touched && cadastroForm.controls['dataNascimento'].invalid" class="text-danger">Campo obrigatório</small>
                       <small *ngIf="dataInvalida" class="text-danger">Data de Nascimento inválida</small>
@@ -63,7 +63,7 @@
                       CEP
                   </label>
                   <input type="text" formControlName="cep" class="form-control" name="cep"
-                      mask="00000-000" required>
+                      mask="00000-000" required (blur)="carregarEndereco()">
               </div>
               <div class="form-group">
                   <label>
@@ -97,10 +97,8 @@
                   <label>
                       UF
                   </label>
-                  <!--<select class="form-control" ngModel formControlName="uf">
-                      <option value="" selected disabled>--UF--</option>
-                      <option *ngFor="let item of estados; let i = index" [value]="item">{{item}}</option>
-                  </select>-->
+                  <input type="text" formControlName="uf" class="form-control" name="uf"
+                  formControlName="uf" required>
               </div>
               <div class="card-header py-3 mb-2">
                   <h6 class="m-0 font-weight-bold text-primary">Contato</h6>

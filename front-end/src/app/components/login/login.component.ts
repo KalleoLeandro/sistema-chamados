@@ -29,7 +29,7 @@ export class LoginComponent {
   public login: Login = { login: "", senha: "" };
 
   constructor(private formBuilder: FormBuilder, private loginService: LoginService, private router: Router) {
-    this.loginService.validarToken(this.token, this.userName).subscribe({
+    this.loginService.validarToken(this.token).subscribe({
       next: (res) => {
         this.router.navigate(['/home']);
       }

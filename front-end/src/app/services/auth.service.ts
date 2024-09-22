@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -15,9 +15,14 @@ export class AuthenticationService {
 
   checkLogin(): Observable<boolean> {
     const token = sessionStorage.getItem('authorization');
-    const userName = sessionStorage.getItem('userName');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'authorization': `${token}`,
+      })
+    }
     if (token) {
-      return this.http.post<boolean>(`${this.url}valida-token`, { token, userName });
+      return this.http.post<boolean>(`${this.url}valida-token`, null, httpOptions);
     } else {
       return of(false);
     }

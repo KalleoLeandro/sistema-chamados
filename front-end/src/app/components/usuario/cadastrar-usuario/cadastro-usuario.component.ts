@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-cadastro-usuario',
@@ -39,10 +40,12 @@ export class CadastroUsuarioComponent {
   public hoje: string = "";
   public id;
 
+  public token: string = sessionStorage.getItem('authorization') || '';
+
   
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute){
-
+  constructor(private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute, private utilsService: UtilsService){
+    
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
     if(this.id != null && this.id != undefined){
       this.carregarUsuario();
@@ -58,7 +61,34 @@ export class CadastroUsuarioComponent {
 
   
   carregarUsuario() {
-    
+
+  }
+
+  carregarEndereco(){
+    this.utilsService.carregarEndereco(this.cadastroForm.controls['cep'].value).subscribe({
+      next: (response)=>{
+        this.cadastroForm.controls['rua'].patchValue(response.body.logradouro);
+        this.cadastroForm.controls['bairro'].patchValue(response.body.bairro);
+        this.cadastroForm.controls['cidade'].patchValue(response.body.localidade);
+        this.cadastroForm.controls['uf'].patchValue(response.body.uf);
+      },
+      error: (error)=>{
+        console.log(error);
+      }
+    })
+  }
+
+  dataNascimentoValida() {
+    debugger;
+    const dataNascimento = this.cadastroForm.controls['dataNascimento'].value;
+    this.utilsService.validarDataNascimento(dataNascimento, this.token).subscribe({
+      next: (res) => {
+        this.dataInvalida = false;
+      },
+      error: (err) => {
+        this.dataInvalida = true;
+      }
+    })
   }
 
 }

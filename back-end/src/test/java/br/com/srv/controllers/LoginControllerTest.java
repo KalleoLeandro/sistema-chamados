@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import br.com.srv.models.requests.LoginRequest;
-import br.com.srv.models.requests.TokenRequest;
 import br.com.srv.models.responses.LoginResponse;
 import br.com.srv.services.impl.LoginServiceImpl;
 
@@ -28,9 +27,7 @@ public class LoginControllerTest {
 	
 	private LoginRequest loginRequest;
 	
-	private LoginResponse loginResponse;
-	
-	private TokenRequest tokenRequest;
+	private LoginResponse loginResponse;	
 	
 	@BeforeEach
     public void setup() {
@@ -42,12 +39,7 @@ public class LoginControllerTest {
         loginResponse.setStatus(200);
         loginResponse.setToken("token");
         loginResponse.setExpiration("01/01/2024 12:00:00");
-        loginResponse.setUserName("user");      
-        
-        tokenRequest = new TokenRequest();
-        
-        tokenRequest.setToken("token");
-        tokenRequest.setUserName("user");
+        loginResponse.setUserName("user");   
        
     }
 	
@@ -62,7 +54,7 @@ public class LoginControllerTest {
 	@Test
 	public void testTokenOk() {
 		Mockito.when(service.validarToken(any())).thenReturn(true);
-		ResponseEntity<Boolean> response = controller.validarToken(tokenRequest);
+		ResponseEntity<Boolean> response = controller.validarToken("token");
 		Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
 		Assertions.assertTrue(response.getBody());
 	}
