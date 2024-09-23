@@ -1,10 +1,9 @@
-import express, { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { validarToken } from '../services/LoginService';
 
 
 export const verificaTokenValido = async (req: Request, res: Response, next:NextFunction) => {    
-    const token: string = req.headers.authorization as string;
-    console.log(token);
+    const token: string = req.headers.authorization as string;    
     try{
         const retorno: boolean = await validarToken(token);
         if(retorno){

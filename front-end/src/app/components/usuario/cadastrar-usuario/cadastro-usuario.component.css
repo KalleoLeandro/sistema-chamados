@@ -27,10 +27,14 @@ input, select{
     margin: 10px 0;
 }
 
+span, .modal-title {
+    color: rgb(33, 37, 41);
+}
+
 #id{
-    visibility: hidden;
-    margin: 0;
-    padding: 0;
-    height: 0;
-    width: 0;
+    display: none;    
+}
+
+.botaoModal{
+    display: none;
 }

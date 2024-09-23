@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CadastroUsuarioService } from 'src/app/services/cadastro-usuario.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
@@ -44,7 +45,7 @@ export class CadastroUsuarioComponent {
 
   
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute, private utilsService: UtilsService){
+  constructor(private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute, private utilsService: UtilsService, private cadastroUsuarioService: CadastroUsuarioService){
     
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
     if(this.id != null && this.id != undefined){
@@ -78,19 +79,59 @@ export class CadastroUsuarioComponent {
     })
   }
 
-  dataNascimentoValida() {
-    debugger;
+  dataNascimentoValida() {    
     const dataNascimento = this.cadastroForm.controls['dataNascimento'].value;
     this.utilsService.validarDataNascimento(dataNascimento, this.token).subscribe({
       next: (res) => {
         this.dataInvalida = false;
       },
-      error: (err) => {
+      error: (error) => {
         this.dataInvalida = true;
       }
     })
   }
 
+  cpfValido(){        
+    const cpf = this.cadastroForm.controls['cpf'].value.replaceAll(".", "").replaceAll("-", "");
+    if (cpf.length === 11) {
+      this.utilsService.validarCpf(cpf, this.token).subscribe({
+        next: (res) =>{
+          this.cpfInvalido = false;
+        },
+        error: (error) =>{
+          this.cpfInvalido = true;
+        }
+      });
+    } else {
+      this.cpfInvalido = false;
+    }        
+  }
+
+  cadastrarAtualizarUsuario(){
+    this.cadastroUsuarioService.cadastrarAtualizarUsuario(this.cadastroForm, this.token as string).subscribe({
+      next: (res) => {
+        this.id != null && this.id != undefined ? this.resposta = "Dados atualizados com sucesso!" : this.resposta = "Dados cadastrados com sucesso!";
+        document.getElementById("botaoModal")?.click();
+      },
+      error: (err) => {        
+        this.id != null && this.id != undefined ? this.resposta = "Erro ao atualizar o usuário!" : this.resposta = "Erro ao cadastrar o usuário!";
+        document.getElementById("botaoModal")?.click();        
+      }
+    });
+  }
+
+  public limparFormulario() {
+    this.cadastroForm.reset();
+    this.cadastroForm.patchValue({
+      sexo: 'm'
+    })
+  }
+
+  public redirecionar() {
+    if (!this.resposta.includes("Erro")) {
+      this.router.navigate(['/']);
+    }
+  }
 }
 
 

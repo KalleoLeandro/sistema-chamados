@@ -25,4 +25,14 @@ export class UtilsService {
     }
     return this.http.post<any>(`${this.url}valida-data-nascimento`, { dataNascimento }, httpOptions);
   }
+
+  public validarCpf(cpf: string, token: string): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'authorization': `${token}`,
+      })
+    }
+    return this.http.post<any>(`${this.url}valida-cpf`, { cpf }, httpOptions);
+  }
 }

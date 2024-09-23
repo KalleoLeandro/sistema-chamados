@@ -9,7 +9,6 @@ import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import br.com.srv.entities.LoginEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.JwtParser;
@@ -72,11 +71,11 @@ public class JwtUtils implements Serializable {
 	}
 
 	// gera token para user
-	public String generateToken(LoginEntity loginEntity) {
+	public String generateToken(String userName, String login) {
 	    Map<String, Object> claims = new HashMap<>();
-	    claims.put("username", loginEntity.getNome());
-	    claims.put("login", loginEntity.getLogin());	    
-	    return doGenerateToken(claims, loginEntity.getNome());
+	    claims.put("username", userName);
+	    claims.put("login", login);	    
+	    return doGenerateToken(claims, login);
 	}
 
 	// Cria o token e devine tempo de expiração pra ele

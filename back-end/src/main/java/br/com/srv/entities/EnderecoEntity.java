@@ -15,22 +15,35 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "dados_login")
-public class LoginEntity {
-	
-	@Id	
+@Table(name = "endereco")
+public class EnderecoEntity {
+
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;	
-	
-	@Column(name = "login")
-	private String login;
-	
-	@Column(name = "senha")
-	private String senha;
-	
-	@Column(name = "perfil")
-	private String perfil;
-	
-	@OneToOne(mappedBy = "loginEntity")
+	private Long id;
+
+	@Column(name = "cep")
+	private String cep;
+
+	@Column(name = "rua")
+	private String rua;
+
+	@Column(name = "numero")
+	private int numero;
+
+	@Column(name = "complemento")
+	private String complemento;
+
+	@Column(name = "bairro")
+	private String bairro;
+
+	@Column(name = "cidade")
+	private String cidade;
+
+	@Column(name = "uf")
+	private String uf;
+
+	@OneToOne(mappedBy = "enderecoEntity")
 	private UsuarioEntity usuario;
+
 }

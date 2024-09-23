@@ -15,22 +15,23 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "dados_login")
-public class LoginEntity {
-	
+@Table(name = "contato")
+public class ContatoEntity {
+
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;	
+	private Long id;
 	
-	@Column(name = "login")
-	private String login;
+	@Column(name = "telefone")
+	private String telefone;
 	
-	@Column(name = "senha")
-	private String senha;
+	@Column(name = "celular")
+	private String celular;
 	
-	@Column(name = "perfil")
-	private String perfil;
+	@Column(name = "email")
+	private String email;
 	
-	@OneToOne(mappedBy = "loginEntity")
+	@OneToOne(mappedBy = "contatoEntity")
 	private UsuarioEntity usuario;
+	
 }
