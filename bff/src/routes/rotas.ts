@@ -20,5 +20,8 @@ rotas.post('/valida-cpf', Middleware.verificaTokenValido, UtilsController.valida
 
 //Rotas Usuario
 rotas.post('/gravar-usuario', Middleware.verificaTokenValido, UsuarioController.gravarUsuario);
+rotas.get('/listar-usuarios', Middleware.verificaTokenValido, UsuarioController.listaUsuarios);
+rotas.get('/buscar-por-id/:id', Middleware.verificaTokenValido, UsuarioController.buscarUsuarioPorId);
+rotas.delete('/excluir-usuario-por-id/:id', Middleware.verificaTokenValido, UsuarioController.excluirUsuarioPorId);
 
 export default rotas;

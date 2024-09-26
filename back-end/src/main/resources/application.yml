@@ -27,4 +27,8 @@ secret:
   jwt:
     secret: ${JWT_SECRET:sistema_chamados}
 
+jwt:
+  token:
+    validity: 1200000		
+
 

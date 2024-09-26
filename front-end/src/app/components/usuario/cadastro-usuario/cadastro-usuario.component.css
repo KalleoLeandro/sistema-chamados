@@ -35,6 +35,7 @@ span, .modal-title {
     display: none;    
 }
 
-.botaoModal{
+#botaoModal{
     display: none;
+    visibility: hidden;
 }

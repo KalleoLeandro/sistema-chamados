@@ -20,7 +20,9 @@ import io.jsonwebtoken.security.Keys;
 public class JwtUtils implements Serializable {
 
 	private static final long serialVersionUID = -2550185165626007488L;
-	public static final long JWT_TOKEN_VALIDITY = 1200000;
+	
+	@Value("${jwt.token.validity}")
+	public long JWT_TOKEN_VALIDITY;
 
 	@Value("${secret.jwt.secret}")
 	private String secret;
@@ -51,7 +53,6 @@ public class JwtUtils implements Serializable {
 		} catch (Exception e) {			
 			throw new Exception("Erro!", e);
 		}
-
 	}
 
 	// para retornar qualquer informação do token nos iremos precisar da secret key	

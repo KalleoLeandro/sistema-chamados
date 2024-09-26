@@ -8,7 +8,8 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class CadastroUsuarioService {
+export class CadastroService {
+  
 
   private url: string = environment.apiUrl;
   
@@ -23,5 +24,10 @@ export class CadastroUsuarioService {
   public cadastrarAtualizarUsuario(formulario:FormGroup, token:string):Observable<string>{
     this.httpOptions.headers = this.httpOptions.headers.set('authorization', `${token}`);
     return this.http.post<string>(`${this.url}gravar-usuario`, formulario.getRawValue() , this.httpOptions);
+  }
+
+  public excluirUsuario(userId: number | undefined, token: string) {
+    this.httpOptions.headers = this.httpOptions.headers.set('authorization', `${token}`);
+    return this.http.delete<string>(`${this.url}excluir-usuario-por-id/${userId}`, this.httpOptions);
   }
 }

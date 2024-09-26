@@ -1,5 +1,7 @@
 package br.com.srv.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -44,6 +46,7 @@ public class EnderecoEntity {
 	private String uf;
 
 	@OneToOne(mappedBy = "enderecoEntity")
+	@JsonBackReference // Evita a serialização recursiva
 	private UsuarioEntity usuario;
 
 }

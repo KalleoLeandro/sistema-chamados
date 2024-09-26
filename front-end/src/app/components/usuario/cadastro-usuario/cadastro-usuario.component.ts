@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CadastroUsuarioService } from 'src/app/services/cadastro-usuario.service';
+import { CadastroService } from 'src/app/services/cadastro.service';
+import { ListaService } from 'src/app/services/lista.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
@@ -39,15 +40,15 @@ export class CadastroUsuarioComponent {
   public cpfInvalido: boolean = false;
   public dataInvalida: boolean = false;  
   public hoje: string = "";
-  public id;
+  public id:number;
 
   public token: string = sessionStorage.getItem('authorization') || '';
 
   
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute, private utilsService: UtilsService, private cadastroUsuarioService: CadastroUsuarioService){
+  constructor(private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute, private utilsService: UtilsService, private cadastroService: CadastroService, private listaService: ListaService){
     
-    this.id = this.activatedRoute.snapshot.paramMap.get('id');
+    this.id = this.activatedRoute.snapshot.paramMap.get('id') as unknown as number;
     if(this.id != null && this.id != undefined){
       this.carregarUsuario();
     }
@@ -62,7 +63,28 @@ export class CadastroUsuarioComponent {
 
   
   carregarUsuario() {
-
+    this.listaService.buscarUsuarioPorId(this.id, this.token).subscribe({
+      next: (response) => {
+        this.cadastroForm.controls['id'].patchValue(response.id);
+        this.cadastroForm.controls['nome'].patchValue(response.nome);
+        this.cadastroForm.controls['cpf'].patchValue(response.cpf);
+        this.cadastroForm.controls['dataNascimento'].patchValue(this.formataData(response.data_nascimento));
+        this.cadastroForm.controls['sexo'].patchValue(response.sexo);
+        this.cadastroForm.controls['cep'].patchValue(response.cep);
+        this.cadastroForm.controls['rua'].patchValue(response.rua);
+        this.cadastroForm.controls['numero'].patchValue(response.numero);
+        this.cadastroForm.controls['bairro'].patchValue(response.bairro);
+        this.cadastroForm.controls['cidade'].patchValue(response.cidade);
+        this.cadastroForm.controls['uf'].patchValue(response.uf);
+        this.cadastroForm.controls['telefone'].patchValue(response.telefone);
+        this.cadastroForm.controls['celular'].patchValue(response.celular);
+        this.cadastroForm.controls['email'].patchValue(response.email);        
+        this.cadastroForm.controls['perfil'].patchValue(response.perfil);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
   }
 
   carregarEndereco(){
@@ -80,7 +102,7 @@ export class CadastroUsuarioComponent {
   }
 
   dataNascimentoValida() {    
-    const dataNascimento = this.cadastroForm.controls['dataNascimento'].value;
+    const dataNascimento = this.cadastroForm.controls['dataNascimento'].value;    
     this.utilsService.validarDataNascimento(dataNascimento, this.token).subscribe({
       next: (res) => {
         this.dataInvalida = false;
@@ -108,7 +130,7 @@ export class CadastroUsuarioComponent {
   }
 
   cadastrarAtualizarUsuario(){
-    this.cadastroUsuarioService.cadastrarAtualizarUsuario(this.cadastroForm, this.token as string).subscribe({
+    this.cadastroService.cadastrarAtualizarUsuario(this.cadastroForm, this.token as string).subscribe({
       next: (res) => {
         this.id != null && this.id != undefined ? this.resposta = "Dados atualizados com sucesso!" : this.resposta = "Dados cadastrados com sucesso!";
         document.getElementById("botaoModal")?.click();
@@ -131,6 +153,13 @@ export class CadastroUsuarioComponent {
     if (!this.resposta.includes("Erro")) {
       this.router.navigate(['/']);
     }
+  }
+
+  public formataData(data: string): string {
+    const dateStr = data;
+    const date = new Date(dateStr);
+    const formattedDate = date.toISOString().substring(0, 10);    
+    return formattedDate;
   }
 }
 

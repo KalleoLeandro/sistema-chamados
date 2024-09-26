@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { validarLogin, validarToken } from '../../src/controllers/LoginController';
 import * as LoginService from '../../src/services/LoginService';
-import { decriptografia, logger } from '../../src/utils/Utils';
+import { decriptografia } from '../../src/utils/Utils';
 
 // Mock dos módulos
 jest.mock('../../src/services/LoginService');
@@ -62,7 +62,11 @@ describe('Teste da função validarToken', () => {
   let res: Response;
   
   beforeEach(() => {
-    req = {} as Request;
+    req = {
+      headers: {
+        'authorization': 'token'
+      }
+    } as Request;
     res = {
       status: jest.fn().mockReturnThis(),  // Mock da função status que retorna o próprio objeto
       json: jest.fn()  // Mock da função json
@@ -70,14 +74,13 @@ describe('Teste da função validarToken', () => {
   });
 
   it('Deve retornar status 200 e dados do token', async () => {
-    (LoginService.validarToken as jest.Mock).mockResolvedValue({ status: 200, valid: true });
+    (LoginService.validarToken as jest.Mock).mockResolvedValue(true);
 
     req.body = { token: 'validtoken' };
 
-    await validarToken(req, res);
-
+    await validarToken(req, res);    
     expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith({ status: 200, valid: true });
+    expect(res.json).toHaveBeenCalledWith(true);
   });
 
   it('Deve retornar status 500 em caso de erro', async () => {

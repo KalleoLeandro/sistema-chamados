@@ -7,8 +7,9 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MainComponent } from './components/main/main.component';
-import { CadastroUsuarioComponent } from './components/usuario/cadastrar-usuario/cadastro-usuario.component';
+import { CadastroUsuarioComponent } from './components/usuario/cadastro-usuario/cadastro-usuario.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { ListarUsuarioComponent } from './components/usuario/listar-usuario/listar-usuario.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { NgxMaskModule } from 'ngx-mask';
     LoginComponent,
     HomeComponent,
     MainComponent,
-    CadastroUsuarioComponent
+    CadastroUsuarioComponent,
+    ListarUsuarioComponent
   ],
   imports: [
     BrowserModule,

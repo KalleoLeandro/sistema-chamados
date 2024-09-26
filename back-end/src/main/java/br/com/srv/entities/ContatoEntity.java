@@ -1,5 +1,7 @@
 package br.com.srv.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +34,7 @@ public class ContatoEntity {
 	private String email;
 	
 	@OneToOne(mappedBy = "contatoEntity")
+	@JsonBackReference // Evita a serialização recursiva
 	private UsuarioEntity usuario;
 	
 }

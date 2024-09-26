@@ -1,0 +1,11 @@
+.th{
+    text-align: center;
+}
+
+#modal{
+    display: none;
+}
+
+span, .modal-title {
+    color: rgb(33, 37, 41);
+}

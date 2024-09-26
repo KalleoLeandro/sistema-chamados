@@ -4,7 +4,8 @@ import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './components/main/main.component';
 import { HomeComponent } from './components/home/home.component';
 import { canActivate } from './guard/auth.guard';
-import { CadastroUsuarioComponent } from './components/usuario/cadastrar-usuario/cadastro-usuario.component';
+import { CadastroUsuarioComponent } from './components/usuario/cadastro-usuario/cadastro-usuario.component';
+import { ListarUsuarioComponent } from './components/usuario/listar-usuario/listar-usuario.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -21,7 +22,8 @@ const routes: Routes = [
       { path: 'home', component: HomeComponent },
       { path: 'usuarios', children: [
         { path: 'cadastro', component: CadastroUsuarioComponent },
-        { path: 'cadastro/:id', component: CadastroUsuarioComponent }
+        { path: 'cadastro/:id', component: CadastroUsuarioComponent },
+        { path: 'lista', component: ListarUsuarioComponent }
       ]}
     ]
   },  
