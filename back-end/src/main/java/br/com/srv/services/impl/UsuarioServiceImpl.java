@@ -49,10 +49,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 					usuarioEntity.getEnderecoEntity().setId(updEntity.getEnderecoEntity().getId());
 					usuarioEntity.getContatoEntity().setId(updEntity.getContatoEntity().getId());
 
-					usuarioEntity.setLoginEntity(updEntity.getLoginEntity());
+					/*usuarioEntity.setLoginEntity(updEntity.getLoginEntity());
 					usuarioEntity.setContatoEntity(updEntity.getContatoEntity());
 					usuarioEntity.setEnderecoEntity(updEntity.getEnderecoEntity());
+					*/
 
+				} else {
+					throw new DefaultErrorException("Erro na recuperacao dos dados do usuário",
+							HttpStatus.INTERNAL_SERVER_ERROR);
 				}
 			}
 			LoginEntity loginEntity = loginRepository.save(usuarioEntity.getLoginEntity());
@@ -64,9 +68,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 			usuarioEntity.setEnderecoEntity(enderecoEntity);
 
 			usuarioRepository.save(usuarioEntity);
-		} catch (
-
-		Exception e) {
+		} catch (Exception e) {
 			throw new DefaultErrorException("Erro na execução da gravação/atualização do usuário: " + e,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}

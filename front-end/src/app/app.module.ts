@@ -10,6 +10,7 @@ import { MainComponent } from './components/main/main.component';
 import { CadastroUsuarioComponent } from './components/usuario/cadastro-usuario/cadastro-usuario.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { ListarUsuarioComponent } from './components/usuario/listar-usuario/listar-usuario.component';
+import { CadastrarProdutoComponent } from './components/produto/cadastrar-produto/cadastrar-produto.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ListarUsuarioComponent } from './components/usuario/listar-usuario/list
     HomeComponent,
     MainComponent,
     CadastroUsuarioComponent,
-    ListarUsuarioComponent
+    ListarUsuarioComponent,
+    CadastrarProdutoComponent
   ],
   imports: [
     BrowserModule,

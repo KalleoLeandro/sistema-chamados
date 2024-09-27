@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { canActivate } from './guard/auth.guard';
 import { CadastroUsuarioComponent } from './components/usuario/cadastro-usuario/cadastro-usuario.component';
 import { ListarUsuarioComponent } from './components/usuario/listar-usuario/listar-usuario.component';
+import { CadastrarProdutoComponent } from './components/produto/cadastrar-produto/cadastrar-produto.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -24,7 +25,13 @@ const routes: Routes = [
         { path: 'cadastro', component: CadastroUsuarioComponent },
         { path: 'cadastro/:id', component: CadastroUsuarioComponent },
         { path: 'lista', component: ListarUsuarioComponent }
-      ]}
+      ]},
+      {
+        path: 'produtos', children: [
+          { path: 'cadastro', component: CadastrarProdutoComponent },
+          { path: 'cadastro/:id', component: CadastrarProdutoComponent }
+        ]
+      }
     ]
   },  
   { path: '**', redirectTo: '404' }
