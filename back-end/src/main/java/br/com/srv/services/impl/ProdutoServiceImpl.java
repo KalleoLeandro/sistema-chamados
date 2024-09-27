@@ -13,6 +13,8 @@ import br.com.srv.entities.MedidaEntity;
 import br.com.srv.entities.ProdutoEntity;
 import br.com.srv.exceptions.DefaultErrorException;
 import br.com.srv.models.requests.ProdutoRequest;
+import br.com.srv.models.responses.CategoriaResponse;
+import br.com.srv.models.responses.MedidaResponse;
 import br.com.srv.models.responses.ProdutoResponse;
 import br.com.srv.repositories.CategoriaRepository;
 import br.com.srv.repositories.MedidaRepository;
@@ -130,5 +132,31 @@ public class ProdutoServiceImpl implements ProdutoService {
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
+	}
+
+	@Override
+	public List<CategoriaResponse> listarCategorias() {
+		try {
+		List<CategoriaEntity> lista = categoriaRepository.findAll();
+		List<CategoriaResponse> response = new ArrayList<CategoriaResponse>();
+		lista.forEach(categoria -> response.add(new CategoriaResponse(categoria)));
+		return response;
+		}catch (Exception e) {
+			throw new DefaultErrorException("Erro na recuperação da lista de categorias: " + e,
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@Override
+	public List<MedidaResponse> listarMedidas() {
+		try {
+			List<MedidaEntity> lista = medidaRepository.findAll();
+			List<MedidaResponse> response = new ArrayList<MedidaResponse>();
+			lista.forEach(medida -> response.add(new MedidaResponse(medida)));
+			return response;
+		}catch (Exception e) {
+			throw new DefaultErrorException("Erro na recuperação da lista de medidas: " + e,
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

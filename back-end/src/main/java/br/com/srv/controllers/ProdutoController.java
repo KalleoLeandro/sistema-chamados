@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.srv.models.requests.ProdutoRequest;
+import br.com.srv.models.responses.CategoriaResponse;
+import br.com.srv.models.responses.MedidaResponse;
 import br.com.srv.models.responses.ProdutoResponse;
 import br.com.srv.services.ProdutoService;
 import jakarta.validation.Valid;
@@ -44,8 +46,15 @@ public class ProdutoController {
 	@DeleteMapping("/excluir-produto-por-id/{id}")
 	public ResponseEntity<Void> excluirProdutoPorId(@PathVariable Long id){
 		service.excluirProdutoPorId(id);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-		
-	}	
-
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();		
+	}
+	
+	@GetMapping("/listar-categorias")
+	public ResponseEntity<List<CategoriaResponse>> listarCategorias(){
+		return ResponseEntity.ok(service.listarCategorias());
+	}
+	@GetMapping("/listar-medidas")
+	public ResponseEntity<List<MedidaResponse>> listarMedidas(){
+		return ResponseEntity.ok(service.listarMedidas());
+	}
 }
