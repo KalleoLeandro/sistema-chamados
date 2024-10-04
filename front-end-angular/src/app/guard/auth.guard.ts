@@ -16,12 +16,12 @@ export const canActivate: CanActivateFn = (
       if (isAuthenticated) {
         return true;
       } else {
-        // Redireciona para a rota de login sem navegação explícita
+        sessionStorage.clear();        
         return router.createUrlTree(['login']);
       }
     }),
     catchError(() => {
-      // Se houver erro (token inválido), redireciona para login
+      sessionStorage.clear();        
       return of(router.createUrlTree(['login']));
     })
   );

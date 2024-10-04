@@ -44,7 +44,7 @@ export const buscarUsuarioPorId = async(req:Request, res: Response)=>{
 export const excluirUsuarioPorId = async(req:Request, res: Response)=>{
     try{        
         await UsuarioService.excluirUsuarioPorId(req.params.id);
-        res.status(200).end();        
+        res.status(204).end();        
     } catch (error) {
         log.error(`Erro: ${error}`);
         res.status(500).json(`Erro: ${error}`);

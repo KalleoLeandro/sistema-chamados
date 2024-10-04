@@ -118,6 +118,21 @@ public class UsuarioServiceImplTest {
 		Mockito.verify(contatoRepository, Mockito.times(1)).save(any(ContatoEntity.class));
 		Mockito.verify(enderecoRepository, Mockito.times(1)).save(any(EnderecoEntity.class));
 	}
+	
+	@Test
+	public void testGravarUsuarioErroFind() {
+		request = new UsuarioRequest(1L, "Teste", "Cpf", "Data", 'M', "Cep", "Rua", 100, null, "Bairro", "Cidade", "Uf",
+				"Telefone", "Celular", "Email", "Login", "Senha", "Perfil");
+
+		Mockito.when(usuarioRepository.findById(anyLong()))
+				.thenReturn(Optional.empty());
+
+		DefaultErrorException exception = Assertions.assertThrows(DefaultErrorException.class, () -> {
+			service.gravarUsuario(request);
+		});
+		
+		Assertions.assertTrue(exception.getMessage().contains("Erro"));
+	}
 
 	@Test
 	public void testGravarUsuarioErro() {
@@ -176,7 +191,7 @@ public class UsuarioServiceImplTest {
 		
 		Mockito.when(usuarioRepository.findById(anyLong())).thenReturn(Optional.empty());
 		DefaultErrorException exception = Assertions.assertThrows(DefaultErrorException.class, () -> {
-            service.excluirUsuarioPorId(1L);
+            service.buscarUsuarioPorId(1L);
         });
 		
     	Assertions.assertTrue(exception.getMessage().contains("Erro"));
@@ -187,7 +202,7 @@ public class UsuarioServiceImplTest {
 		
 		Mockito.when(usuarioRepository.findById(anyLong())).thenThrow(new DefaultErrorException("Erro", HttpStatus.INTERNAL_SERVER_ERROR));
 		DefaultErrorException exception = Assertions.assertThrows(DefaultErrorException.class, () -> {
-            service.excluirUsuarioPorId(1L);
+            service.buscarUsuarioPorId(1L);
         });
 		
     	Assertions.assertTrue(exception.getMessage().contains("Erro"));

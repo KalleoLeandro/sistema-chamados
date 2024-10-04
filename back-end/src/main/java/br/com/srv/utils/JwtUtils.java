@@ -80,11 +80,10 @@ public class JwtUtils implements Serializable {
 	}
 
 	// Cria o token e devine tempo de expiração pra ele
-	@SuppressWarnings("deprecation")
 	private String doGenerateToken(Map<String, Object> claims, String subject) {
 		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY))
-				.signWith(SignatureAlgorithm.HS512, getSecretKey()) // Use a chave do application.yml
+				.signWith(getSecretKey(), SignatureAlgorithm.HS512) // Use a chave do application.yml
 				.compact();
 	}
 

@@ -1,14 +1,14 @@
 import { CustomError } from "../exceptions/CustomError";
-import { Usuario } from "../models/UsuarioResponse";
-import { UsuarioRequest } from "../models/UsuarioRequest";
-import { logger } from "../utils/Utils";
+
 import dotenv from 'dotenv';
+import { logger } from '../utils/Utils';
+import { Produto } from "../models/Produto";
 
 dotenv.config();
 
 const log = logger;
 
-export const gravarUsuario = async (body: UsuarioRequest) => {
+export const gravarProduto = async (body: Produto) => {
     try {
         const options = {
             method: 'POST',
@@ -17,17 +17,16 @@ export const gravarUsuario = async (body: UsuarioRequest) => {
             },
             body: JSON.stringify(body)
         };
-
-        log.info("Executando a /api/usuarios/gravar-usuario");
-        let response: any = await fetch(`${process.env.HOST_MS}/usuarios/gravar-usuario`, options);
+        log.info("Executando a /api/produtos/gravar-produto");
+        let response: any = await fetch(`${process.env.HOST_MS}/produtos/gravar-produto`, options);
         return response.status;
-    } catch (error: any) {
+    }catch(error:any){
         log.error(`Erro: ${error}`);
         throw new CustomError(error.message, 500);
     }
 }
 
-export const listaUsuarios = async () => {
+export const listarProdutos = async () => {
     try {
         const options = {
             method: 'GET',
@@ -36,8 +35,8 @@ export const listaUsuarios = async () => {
             }
         };
 
-        log.info("Executando a /api/usuarios/listar-usuarios");
-        const response: any = await fetch(`${process.env.HOST_MS}/usuarios/listar-usuarios`, options).then(res => res.json());
+        log.info("Executando a /api/produtos/listar-produtos");
+        const response: any = await fetch(`${process.env.HOST_MS}/produtos/listar-produtos`, options).then(res => res.json());
         return {
             status: 200,
             body: response
@@ -48,7 +47,7 @@ export const listaUsuarios = async () => {
     }
 }
 
-export const buscarUsuarioPorId = async(id: string) => {
+export const buscarProdutoPorId = async (id: string) => {
     try {
         const options = {
             method: 'GET',
@@ -57,16 +56,16 @@ export const buscarUsuarioPorId = async(id: string) => {
             }
         };
 
-        log.info(`Executando a /api/usuarios/buscar-por-id/${id}`);
-        const response: any = await fetch(`${process.env.HOST_MS}/usuarios/buscar-por-id/${id}`, options).then(res => res.json());
-        return response;        
+        log.info(`Executando a /api/produtos/buscar-produto-por-id`);
+        const response: any = await fetch(`${process.env.HOST_MS}/produtos/buscar-produto-por-id/${id}`, options).then(res => res.json());
+        return response;
     } catch (error: any) {
         log.error(`Erro: ${error}`);
         throw new CustomError(error.message, 500);
-    }
+    }  
 }
 
-export const excluirUsuarioPorId = async (id: string) => {
+export const excluirProdutoPorId = async (id: string) => {
     try {
         const options = {
             method: 'DELETE',
@@ -75,11 +74,10 @@ export const excluirUsuarioPorId = async (id: string) => {
             }
         };
 
-        log.info("Executando a /api/usuarios/excluir-usuario-por-id");
-        await fetch(`${process.env.HOST_MS}/usuarios/excluir-usuario-por-id/${id}`, options);               
+        log.info("Executando a /api/produtos/excluir-produto-por-id");
+        await fetch(`${process.env.HOST_MS}/produtos/excluir-produto-por-id/${id}`, options);               
     } catch (error: any) {
         log.error(`Erro: ${error}`);
         throw new CustomError(error.message, 500);
     }
 }
-

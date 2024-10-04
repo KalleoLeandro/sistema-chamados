@@ -36,7 +36,7 @@ public class UsuarioControllerTest {
 		
 	    Mockito.verify(service, Mockito.times(1)).gravarUsuario(new UsuarioRequest());
 	    Assertions.assertEquals(response.getStatusCode(), HttpStatus.CREATED);	
-	}
+	}	
 	
 	@Test
 	public void testListarUsuarioOk() {
