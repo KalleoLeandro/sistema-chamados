@@ -11,12 +11,14 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 
 import br.com.srv.models.requests.LoginRequest;
 import br.com.srv.models.responses.LoginResponse;
 import br.com.srv.services.impl.LoginServiceImpl;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class LoginControllerTest {
 
 	@InjectMocks

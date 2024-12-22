@@ -1,8 +1,10 @@
 package br.com.srv.services;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import br.com.srv.entities.CategoriaEntity;
 import br.com.srv.entities.MedidaEntity;
@@ -21,6 +24,7 @@ import br.com.srv.repositories.ProdutoRepository;
 import br.com.srv.services.impl.ProdutoServiceImpl;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class ProdutoServiceImplTest {
 	
 	@InjectMocks
@@ -35,7 +39,11 @@ public class ProdutoServiceImplTest {
 	@Mock
 	private CategoriaRepository categoriaRepository;
 	
-	ProdutoRequest request;
+	ProdutoRequest request;		
+	
+	CategoriaEntity categoria;
+	
+	MedidaEntity medida;
 	
 	@BeforeEach
 	public void setUp() {
@@ -47,11 +55,23 @@ public class ProdutoServiceImplTest {
 		request.setQuantidade(1);
 		request.setMedida(1L);
 		request.setCategoria(1L);
+		
+		categoria = new CategoriaEntity();
+		categoria.setId(1L);
+		categoria.setDescricao("Teste");
+		
+		medida = new MedidaEntity();
+		medida.setId(1L);
+		medida.setSigla("TS");
+		medida.setDescricao("Teste");
 	}
 
 	@Test
 	public void gravarProdutoOk() {
-		Mockito.when(produtoRepository.save(any())).thenReturn(new ProdutoEntity());
+		Mockito.when(produtoRepository.save(any())).thenReturn(new ProdutoEntity());	
+		Mockito.when(categoriaRepository.findById(anyLong())).thenReturn(Optional.of(categoria));
+		Mockito.when(medidaRepository.findById(anyLong())).thenReturn(Optional.of(medida));
+		
 		
 		service.gravarProduto(request);
 		

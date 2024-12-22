@@ -39,6 +39,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 			ProdutoEntity entity = getProduto(produtoRequest);
 			produtoRepository.save(entity);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new DefaultErrorException("Erro na execução da gravação/atualização do produto: " + e,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -57,7 +58,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 	private CategoriaEntity findCategoriaById(Long id) {
 		try {
-			Optional<CategoriaEntity> cOptional = categoriaRepository.findById(id);
+			Optional<CategoriaEntity> cOptional = categoriaRepository.findById(1L);			
 			if (cOptional.isPresent()) {
 				CategoriaEntity categoria = cOptional.get();
 				return categoria;

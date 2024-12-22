@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest
@@ -16,6 +17,7 @@ import org.springframework.test.context.TestPropertySource;
 	    "jwt.token.validity=1000",
 	    "secret.jwt.secret=myTestSecretKey"
 	})
+@ActiveProfiles("test")
 public class JwtUtilsTest {
 
     @Autowired

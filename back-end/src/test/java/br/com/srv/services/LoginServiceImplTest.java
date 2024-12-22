@@ -15,6 +15,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
 import br.com.srv.entities.LoginEntity;
@@ -32,6 +33,7 @@ import br.com.srv.utils.JwtUtils;
 	    "jwt.token.validity=10000",
 	    "secret.jwt.secret=myTestSecretKey"
 	})
+@ActiveProfiles("test")
 public class LoginServiceImplTest {
 
     @Mock

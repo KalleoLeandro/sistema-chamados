@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 
 import br.com.srv.models.requests.ProdutoRequest;
 import br.com.srv.models.responses.CategoriaResponse;
@@ -22,6 +23,7 @@ import br.com.srv.models.responses.ProdutoResponse;
 import br.com.srv.services.ProdutoService;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class ProdutoControllerTest {
 
 	@InjectMocks
